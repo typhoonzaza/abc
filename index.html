@@ -6,136 +6,130 @@
   <title>godmhoiz</title>
 
   <style>
-    *{
-      box-sizing:border-box;
+    * {
+      box-sizing: border-box;
     }
 
-    body{
-      margin:0;
-      font-family:sans-serif;
-      background:#edf1f5;
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #edf1f5;
     }
 
-    .app{
-      display:flex;
-      min-height:100vh;
+    .app {
+      display: flex;
+      min-height: 100vh;
     }
 
-    .sidebar{
-      width:260px;
-      background:white;
-      padding:20px;
-      box-shadow:0 0 10px rgba(0,0,0,0.15);
-      z-index:10;
+    .sidebar {
+      width: 260px;
+      background: white;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.15);
+      z-index: 10;
     }
 
-    .sidebar h2{
-      margin-top:0;
+    .sidebar h2 {
+      margin-top: 0;
     }
 
-    input,button{
-      width:100%;
-      padding:12px;
-      margin-top:10px;
-      border-radius:10px;
-      font-size:16px;
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 10px;
+      font-size: 16px;
     }
 
-    input{
-      border:1px solid #ccc;
+    input {
+      border: 1px solid #ccc;
     }
 
-    button{
-      border:none;
-      color:white;
-      cursor:pointer;
+    button {
+      border: none;
+      color: white;
+      cursor: pointer;
     }
 
-    .save{
-      background:#4f8cff;
+    .save {
+      background: #4f8cff;
     }
 
-    .clear{
-      background:#e74c3c;
+    .main {
+      flex: 1;
+      padding: 20px;
+      overflow: auto;
     }
 
-    .main{
-      flex:1;
-      padding:20px;
-      overflow:auto;
+    .room {
+      width: 1200px;
+      height: 800px;
+      background: white;
+      border: 4px solid #333;
+      border-radius: 16px;
+      position: relative;
+      margin: auto;
+      touch-action: none;
     }
 
-    .room{
-      width:900px;
-      height:600px;
-      background:white;
-      border:4px solid #333;
-      border-radius:16px;
-      position:relative;
-      margin:auto;
-      touch-action:none;
+    .board {
+      position: absolute;
+      top: 25px;
+      left: 250px;
+      width: 700px;
+      height: 70px;
+      background: #222;
+      color: white;
+      text-align: center;
+      line-height: 70px;
+      border-radius: 12px;
+      font-size: 26px;
+      font-weight: bold;
     }
 
-    .board{
-      position:absolute;
-      top:20px;
-      left:150px;
-      width:600px;
-      height:60px;
-      background:#222;
-      color:white;
-      text-align:center;
-      line-height:60px;
-      border-radius:12px;
-      font-size:24px;
-      font-weight:bold;
+    .desk {
+      width: 90px;
+      height: 60px;
+      background: #4f8cff;
+      color: white;
+      border-radius: 12px;
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      user-select: none;
+      cursor: grab;
+      touch-action: none;
+      font-size: 14px;
     }
 
-    .desk{
-      width:90px;
-      height:60px;
-      background:#4f8cff;
-      color:white;
-      border-radius:12px;
-      position:absolute;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      flex-direction:column;
-      user-select:none;
-      cursor:grab;
-      touch-action:none;
-      font-size:14px;
+    .desk-name {
+      font-size: 12px;
+      color: #ffe600;
+      margin-top: 3px;
+      max-width: 80px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
 
-    .desk-name{
-      font-size:12px;
-      color:#ffe600;
-      margin-top:3px;
-      max-width:80px;
-      overflow:hidden;
-      white-space:nowrap;
-      text-overflow:ellipsis;
+    .selected {
+      outline: 4px solid #ffcc00;
     }
 
-    .selected{
-      outline:4px solid #ffcc00;
-    }
-
-    @media (max-width:768px){
-
-      .app{
-        flex-direction:column;
+    @media (max-width: 768px) {
+      .app {
+        flex-direction: column;
       }
 
-      .sidebar{
-        width:100%;
+      .sidebar {
+        width: 100%;
       }
 
-      .main{
-        padding:10px;
+      .main {
+        padding: 10px;
       }
-
     }
   </style>
 </head>
@@ -145,446 +139,198 @@
 <div class="app">
 
   <div class="sidebar">
-
     <h2>ระบบจองโต๊ะ</h2>
 
-    <p id="selectedText">
-      ยังไม่ได้เลือกโต๊ะ
-    </p>
+    <p id="selectedText">ยังไม่ได้เลือกโต๊ะ</p>
 
-    <input
-      type="text"
-      id="nameInput"
-      placeholder="กรอกชื่อ"
-    >
+    <input type="text" id="nameInput" placeholder="กรอกชื่อ">
 
-    <button
-      class="save"
-      onclick="saveName()"
-    >
-      บันทึกชื่อ
-    </button>
-
-    <button
-      class="clear"
-      onclick="clearName()"
-    >
-      ล้างชื่อโต๊ะนี้
-    </button>
-
-    <button
-      class="clear"
-      onclick="resetAll()"
-    >
-      รีเซ็ตทั้งหมด
-    </button>
-
+    <button class="save" onclick="saveName()">บันทึกชื่อ</button>
   </div>
 
   <div class="main">
-
     <div class="room" id="room">
-
-      <div class="board">
-        กระดาน
-      </div>
-
+      <div class="board">กระดาน</div>
     </div>
-
   </div>
 
 </div>
 
 <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+  import {
+    getDatabase,
+    ref,
+    set,
+    onValue
+  } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
 
-import {
-  getDatabase,
-  ref,
-  set,
-  onValue,
-  remove
-}
-from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
+  const firebaseConfig = {
+    apiKey: "AIzaSyDQpnPJQgbBGmtZrm-9KcfqFBkznnHG3SY",
+    authDomain: "godmhoiz.firebaseapp.com",
+    databaseURL: "https://godmhoiz-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "godmhoiz",
+    storageBucket: "godmhoiz.firebasestorage.app",
+    messagingSenderId: "898201579256",
+    appId: "1:898201579256:web:b99e5bfce7a315a046d50d",
+    measurementId: "G-9QFTCLZJBL"
+  };
 
-const firebaseConfig = {
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
 
-  apiKey: "AIzaSyDQpnPJQgbBGmtZrm-9KcfqFBkznnHG3SY",
+  const room = document.getElementById("room");
+  const selectedText = document.getElementById("selectedText");
+  const nameInput = document.getElementById("nameInput");
 
-  authDomain: "godmhoiz.firebaseapp.com",
+  let currentDesk = null;
+  let draggingDesk = null;
+  let offsetX = 0;
+  let offsetY = 0;
 
-  databaseURL:
-  "https://godmhoiz-default-rtdb.asia-southeast1.firebasedatabase.app",
+  for (let i = 1; i <= 30; i++) {
+    createDesk(i);
+  }
 
-  projectId: "godmhoiz",
+  loadRealtimeData();
 
-  storageBucket:
-  "godmhoiz.firebasestorage.app",
+  function createDesk(number) {
+    const desk = document.createElement("div");
 
-  messagingSenderId:
-  "898201579256",
+    desk.className = "desk";
+    desk.dataset.number = number;
 
-  appId:
-  "1:898201579256:web:b99e5bfce7a315a046d50d",
+    desk.innerHTML = `
+      <div>โต๊ะ ${number}</div>
+      <div class="desk-name">ว่าง</div>
+    `;
 
-  measurementId:
-  "G-9QFTCLZJBL"
-};
+    const col = (number - 1) % 6;
+    const row = Math.floor((number - 1) / 6);
 
-const app =
-initializeApp(firebaseConfig);
+    desk.style.left = (120 + col * 160) + "px";
+    desk.style.top = (140 + row * 110) + "px";
 
-const db =
-getDatabase(app);
+    desk.addEventListener("pointerdown", startDrag);
 
-const room =
-document.getElementById("room");
+    room.appendChild(desk);
+  }
 
-const selectedText =
-document.getElementById("selectedText");
+  function loadRealtimeData() {
+    const desksRef = ref(db, "classroom/desks");
 
-const nameInput =
-document.getElementById("nameInput");
+    onValue(desksRef, (snapshot) => {
+      const data = snapshot.val();
 
-let currentDesk = null;
+      if (!data) return;
 
-let draggingDesk = null;
+      Object.keys(data).forEach(number => {
+        const desk = document.querySelector(`.desk[data-number="${number}"]`);
 
-let offsetX = 0;
-let offsetY = 0;
+        if (!desk) return;
 
-// สร้างโต๊ะ 30 ตัว
-for(let i=1;i<=30;i++){
+        if (data[number].x !== undefined) {
+          desk.style.left = data[number].x + "px";
+        }
 
-  createDesk(i);
+        if (data[number].y !== undefined) {
+          desk.style.top = data[number].y + "px";
+        }
 
-}
+        if (data[number].name) {
+          desk.querySelector(".desk-name").innerText = data[number].name;
+        } else {
+          desk.querySelector(".desk-name").innerText = "ว่าง";
+        }
+      });
+    });
+  }
 
-// โหลดข้อมูล realtime
-loadRealtimeData();
-
-function createDesk(number){
-
-  const desk =
-  document.createElement("div");
-
-  desk.className = "desk";
-
-  desk.dataset.number = number;
-
-  desk.innerHTML = `
-    <div>โต๊ะ ${number}</div>
-    <div class="desk-name">ว่าง</div>
-  `;
-
-  const col = (number-1)%6;
-  const row =
-  Math.floor((number-1)/6);
-
-  desk.style.left =
-  (80 + col*130)+"px";
-
-  desk.style.top =
-  (120 + row*85)+"px";
-
-  desk.addEventListener(
-    "pointerdown",
-    startDrag
-  );
-
-  room.appendChild(desk);
-}
-
-function loadRealtimeData(){
-
-  const desksRef =
-  ref(db,"classroom/desks");
-
-  onValue(desksRef,(snapshot)=>{
-
-    const data = snapshot.val();
-
-    if(!data) return;
-
-    Object.keys(data).forEach(number=>{
-
-      const desk =
-      document.querySelector(
-        `.desk[data-number="${number}"]`
-      );
-
-      if(!desk) return;
-
-      if(data[number].x !== undefined){
-
-        desk.style.left =
-        data[number].x + "px";
-
-      }
-
-      if(data[number].y !== undefined){
-
-        desk.style.top =
-        data[number].y + "px";
-
-      }
-
-      if(data[number].name){
-
-        desk.querySelector(".desk-name")
-        .innerText =
-        data[number].name;
-
-      }
-      else{
-
-        desk.querySelector(".desk-name")
-        .innerText = "ว่าง";
-
-      }
-
+  function selectDesk(desk) {
+    document.querySelectorAll(".desk").forEach(d => {
+      d.classList.remove("selected");
     });
 
-  });
+    desk.classList.add("selected");
+    currentDesk = desk;
 
-}
+    const number = desk.dataset.number;
+    const currentName = desk.querySelector(".desk-name").innerText;
 
-function selectDesk(desk){
+    selectedText.innerText = `เลือกโต๊ะ ${number}`;
+    nameInput.value = currentName === "ว่าง" ? "" : currentName;
+  }
 
-  document
-  .querySelectorAll(".desk")
-  .forEach(d=>{
+  function startDrag(e) {
+    draggingDesk = e.currentTarget;
 
-    d.classList.remove("selected");
+    selectDesk(draggingDesk);
 
-  });
+    const rect = draggingDesk.getBoundingClientRect();
 
-  desk.classList.add("selected");
+    offsetX = e.clientX - rect.left;
+    offsetY = e.clientY - rect.top;
 
-  currentDesk = desk;
+    draggingDesk.setPointerCapture(e.pointerId);
 
-  const number =
-  desk.dataset.number;
+    draggingDesk.addEventListener("pointermove", drag);
+    draggingDesk.addEventListener("pointerup", stopDrag);
+  }
 
-  const currentName =
-  desk.querySelector(".desk-name")
-  .innerText;
+  function drag(e) {
+    if (!draggingDesk) return;
 
-  selectedText.innerText =
-  `เลือกโต๊ะ ${number}`;
+    const roomRect = room.getBoundingClientRect();
 
-  nameInput.value =
-  currentName==="ว่าง"
-  ? ""
-  : currentName;
-}
+    let x = e.clientX - roomRect.left - offsetX;
+    let y = e.clientY - roomRect.top - offsetY;
 
-function startDrag(e){
+    x = Math.max(0, Math.min(x, room.clientWidth - draggingDesk.clientWidth));
+    y = Math.max(0, Math.min(y, room.clientHeight - draggingDesk.clientHeight));
 
-  draggingDesk =
-  e.currentTarget;
+    draggingDesk.style.left = x + "px";
+    draggingDesk.style.top = y + "px";
+  }
 
-  selectDesk(draggingDesk);
+  function stopDrag() {
+    if (!draggingDesk) return;
 
-  const rect =
-  draggingDesk.getBoundingClientRect();
+    const number = draggingDesk.dataset.number;
+    const name = draggingDesk.querySelector(".desk-name").innerText;
 
-  offsetX =
-  e.clientX - rect.left;
+    set(ref(db, `classroom/desks/${number}`), {
+      x: parseInt(draggingDesk.style.left),
+      y: parseInt(draggingDesk.style.top),
+      name: name === "ว่าง" ? "" : name
+    });
 
-  offsetY =
-  e.clientY - rect.top;
+    draggingDesk.removeEventListener("pointermove", drag);
+    draggingDesk.removeEventListener("pointerup", stopDrag);
 
-  draggingDesk.setPointerCapture(
-    e.pointerId
-  );
+    draggingDesk = null;
+  }
 
-  draggingDesk.addEventListener(
-    "pointermove",
-    drag
-  );
-
-  draggingDesk.addEventListener(
-    "pointerup",
-    stopDrag
-  );
-}
-
-function drag(e){
-
-  if(!draggingDesk) return;
-
-  const roomRect =
-  room.getBoundingClientRect();
-
-  let x =
-  e.clientX -
-  roomRect.left -
-  offsetX;
-
-  let y =
-  e.clientY -
-  roomRect.top -
-  offsetY;
-
-  x = Math.max(
-    0,
-    Math.min(
-      x,
-      room.clientWidth -
-      draggingDesk.clientWidth
-    )
-  );
-
-  y = Math.max(
-    0,
-    Math.min(
-      y,
-      room.clientHeight -
-      draggingDesk.clientHeight
-    )
-  );
-
-  draggingDesk.style.left =
-  x+"px";
-
-  draggingDesk.style.top =
-  y+"px";
-}
-
-function stopDrag(){
-
-  if(!draggingDesk) return;
-
-  const number =
-  draggingDesk.dataset.number;
-
-  const name =
-  draggingDesk
-  .querySelector(".desk-name")
-  .innerText;
-
-  set(
-    ref(db,
-    `classroom/desks/${number}`),
-
-    {
-      x:parseInt(
-        draggingDesk.style.left
-      ),
-
-      y:parseInt(
-        draggingDesk.style.top
-      ),
-
-      name:
-      name==="ว่าง"
-      ? ""
-      : name
+  window.saveName = function() {
+    if (!currentDesk) {
+      alert("กรุณาเลือกโต๊ะก่อน");
+      return;
     }
-  );
 
-  draggingDesk.removeEventListener(
-    "pointermove",
-    drag
-  );
+    const number = currentDesk.dataset.number;
+    const name = nameInput.value.trim();
 
-  draggingDesk.removeEventListener(
-    "pointerup",
-    stopDrag
-  );
-
-  draggingDesk = null;
-}
-
-window.saveName = function(){
-
-  if(!currentDesk){
-
-    alert("กรุณาเลือกโต๊ะก่อน");
-    return;
-  }
-
-  const number =
-  currentDesk.dataset.number;
-
-  const name =
-  nameInput.value.trim();
-
-  if(name===""){
-
-    alert("กรุณากรอกชื่อ");
-    return;
-  }
-
-  const x =
-  parseInt(currentDesk.style.left);
-
-  const y =
-  parseInt(currentDesk.style.top);
-
-  set(
-    ref(db,
-    `classroom/desks/${number}`),
-
-    {
-      x:x,
-      y:y,
-      name:name
+    if (name === "") {
+      alert("กรุณากรอกชื่อ");
+      return;
     }
-  );
-}
 
-window.clearName = function(){
-
-  if(!currentDesk){
-
-    alert("กรุณาเลือกโต๊ะก่อน");
-    return;
+    set(ref(db, `classroom/desks/${number}`), {
+      x: parseInt(currentDesk.style.left),
+      y: parseInt(currentDesk.style.top),
+      name: name
+    });
   }
-
-  const number =
-  currentDesk.dataset.number;
-
-  const x =
-  parseInt(currentDesk.style.left);
-
-  const y =
-  parseInt(currentDesk.style.top);
-
-  set(
-    ref(db,
-    `classroom/desks/${number}`),
-
-    {
-      x:x,
-      y:y,
-      name:""
-    }
-  );
-
-  nameInput.value = "";
-}
-
-window.resetAll = function(){
-
-  const confirmReset =
-  confirm(
-    "ต้องการรีเซ็ตทั้งหมดใช่ไหม?"
-  );
-
-  if(confirmReset){
-
-    remove(
-      ref(db,"classroom/desks")
-    );
-
-    location.reload();
-  }
-}
-
 </script>
 
 </body>
